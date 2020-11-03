@@ -5,13 +5,17 @@
 .socials__icon {
     width: 25px;
     height: 25px;
-
+    opacity: 0.3;
+    transition: all .3s;
     &--footer {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        opacity: 0.3;
+    }
+
+    &:hover {
+        opacity: 1;
     }
 }
 
@@ -20,11 +24,18 @@
 
     &--footer {
         position: relative;
-        opacity: 0.3;
-        border: 1px solid #ffffff;
+        border: 1px solid rgba(255,255,255, 0.3);
         border-radius: 50%;
         width: 50px;
         height: 50px;
+        transition: all .3s;
+        cursor: pointer;
+        &:hover {
+            border: 1px solid rgba(255,255,255, 1);
+            .socials__icon--footer {
+                    opacity: 1;
+            }
+        }
     }
 
     &:last-child {
