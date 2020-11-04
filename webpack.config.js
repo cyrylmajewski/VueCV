@@ -7,10 +7,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const ghpages = require('gh-pages');
+
+ghpages.publish('dist', {
+  branch: 'gh-pages',
+  repo: 'https://github.com/crackthis/LoftSchool-VueJS/tree/gh-pages'
+});
 
 module.exports = (env, argv) => {
   const isProductionBuild = argv.mode === "production";
-  const publicPath = "/";
+  const publicPath = "/LoftSchool-VueJS/";
 
   const pcss = {
     test: /\.(p|post|)css$/,
@@ -25,7 +31,6 @@ module.exports = (env, argv) => {
     test: /\.vue$/,
     loader: "vue-loader",
   };
-
   const js = {
     test: /\.js$/,
     loader: "babel-loader",
