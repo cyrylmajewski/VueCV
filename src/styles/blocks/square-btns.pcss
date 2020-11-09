@@ -1,9 +1,12 @@
 .square-btns {
-    position: absolute;
-    bottom: 61px;
+    position: relative;
+    bottom: 60px;
     display: flex;
-    right: -5%;
     flex-direction: column;
+
+    @include phones {
+        bottom: 100px;
+    }
 }
 
 .square-btns__item {

@@ -1,10 +1,36 @@
 .thumbs {
-    position: absolute;
+    position: relative;
     right: 0;
     bottom: 60px;
     display: flex;
+
+    @include phones {
+        display: none;
+    }
+}
+
+.thumbs__link {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    display: block;
 }
 
 .thumbs__item {
-    width: 178px;
+    width: 100%;
+    max-width: 178px;
+    outline: 3px solid transparent;
+    transition: .2s;
+    &.active, &:hover {
+        outline: 3px solid #f29400;
+        position: relative;
+        z-index: 10;
+    }
+}
+
+.thumbs__pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

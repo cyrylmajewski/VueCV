@@ -5,11 +5,23 @@
 .footer__container {
     display: flex;
     padding: 81px 0 83px 0;
+
+    @include phones {
+        flex-direction: column;
+    }
 }
 
 .footer__copyright {
     display: flex;
     width: 40%;
+    @include desktop {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @include phones {
+        width: 100%;
+    }
 }
 
 .footer__copyright-year {
@@ -26,6 +38,11 @@
     text-align: left;
     text-transform: uppercase;
     margin-bottom: 42px;
+
+    @include desktop {
+        margin-bottom: 34px;
+        width: 84%;
+    }
 }
 
 .footer__data-text {
@@ -36,6 +53,11 @@
 
 .footer__data-menu {
     margin-bottom: 70px;
+    @include tablets {
+        .menu__list {
+            display: flex;
+        }
+    }
 }
 
 .footer__data-menu > .menu__list {
@@ -44,14 +66,39 @@
 
 .footer__data-content {
     display: flex;
+
+    @include tablets {
+        flex-direction: column;
+    }
+}
+
+.footer__data-col {
+    @include tablets {
+        margin-bottom: 61px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .footer__data-col > .footer__data-text {
-    width: 72%;
+    width: 100%;
     margin-bottom: 27px;
 }
 
 .footer__copytight-col {
     width: 46%;
     margin-right: 60px;
+    @include desktop {
+        width: 61%;
+        margin-bottom: 31px;
+    }
+
+    @include tablets {
+        width: 80%;
+    }
+}
+
+.footer__copyright-userinfo {
+    margin-bottom: 50px;
 }

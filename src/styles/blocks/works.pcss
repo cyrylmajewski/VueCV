@@ -3,8 +3,17 @@
     font-size: 36px;
     font-weight: 700;
     margin-bottom: 92px;
+    @include phones {
+        text-align: center;
+    }
 }
 
 .works__container {
     padding: 203px 0 206px 0;
+    width: 81%;
+
+    @include phones {
+        width: 100%;
+        padding: 203px 0 130px 0;
+    }
 }

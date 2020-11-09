@@ -1,5 +1,15 @@
 .socials {
     display: flex;
+
+    @include phones {
+        display: none;
+    }
+
+    &--round-borders {
+        @include phones {
+            display: flex;
+        }
+    }
 }
 
 .socials__icon {

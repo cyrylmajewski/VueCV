@@ -1,17 +1,33 @@
 .menu__list {
     display: flex;
     justify-content: center;
+    @include tablets {
+        display: none;
+    }
 }
 
 .menu__list {
     text-decoration: none;
     white-space: nowrap;
+
+    @include phones {
+        flex-wrap: wrap;
+    }
 }
 
 .menu__item {
     margin-right: 63px;
     &:last-child {
         margin-right: 0;
+    }
+
+    @include phones {
+        margin-right: 90px;
+        width: 20%;
+        margin-bottom: 31px;
+        &:nth-last-child(-n+2) {
+            margin-bottom: 0;
+        }
     }
 }
 

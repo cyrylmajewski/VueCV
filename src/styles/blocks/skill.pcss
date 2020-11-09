@@ -25,6 +25,14 @@
     max-width: 740px;
     justify-content: space-between;
     margin-right: 4%;
+
+    @include tablets {
+        margin-right: 0;
+    }
+
+    @include phones {
+        flex-wrap: wrap;
+    }
 }
 
 .skill__title {
@@ -47,9 +55,11 @@
 
 .skills-row {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     flex-direction: column;
-    display: -webkit-box;
+    @include tablets {
+        align-items: center;
+    }
 }
 
 .skills-row__title {
@@ -57,4 +67,13 @@
     margin: 0 auto 50px;
     font-size: 24px;
     font-weight: 700;
+    @include desktop {
+        margin: 0 59% 49px 0;
+    }
+
+    @include tablets {
+        margin: 0;
+        margin-bottom: 24px;
+        align-self: auto;
+    }
 }
