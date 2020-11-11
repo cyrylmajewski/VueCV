@@ -17,6 +17,8 @@
 
 .menu__item {
     margin-right: 63px;
+    transition: .3s;
+    opacity: 0.5;
     &:last-child {
         margin-right: 0;
     }
@@ -28,6 +30,10 @@
         &:nth-last-child(-n+2) {
             margin-bottom: 0;
         }
+    }
+
+    &:hover {
+        opacity: 1;
     }
 }
 

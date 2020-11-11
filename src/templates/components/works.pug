@@ -37,12 +37,14 @@ script(type="text/x-template")#preview-thumbs
 script(type="text/x-template")#preview-btns
   .square-btns
     button(
+      ref="buttonNext"
       type="button"
-      @click="$emit('slide', 'next')"
+      @click="buttonOff('next')"
       ).square-btns__item.square-btns__item--next
     button(
+      ref="buttonPrev"
       type="button"
-      @click="$emit('slide', 'prev')"
+      @click="buttonOff('prev')"
       ).square-btns__item.square-btns__item--prev
 
 

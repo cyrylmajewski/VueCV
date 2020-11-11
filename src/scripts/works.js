@@ -7,6 +7,15 @@ const thumbs = {
 
 const btns = {
     template: "#preview-btns",
+    methods: {
+        buttonOff(direction) {
+                let btnOff = this.$refs;
+                this.$emit('slide',{direction, btnOff} );
+        }
+    },
+    mounted() {
+        this.$refs.buttonPrev.classList.add('non-active');
+    }
 };
 
 const display = {
@@ -16,7 +25,7 @@ const display = {
     computed: {
         reversedWorks() {
             const works = [...this.works];
-            return works.slice(0, 3).reverse();
+            return works.slice(0, 4);
         }
     }
 };
@@ -48,21 +57,11 @@ new Vue({
         }
     },
     computed: {
-      currentWork() {
-          return this.works[0];
-      }
-    },
-    watch: {
-      currentIndex(value) {
-          this.makeInfiniteLoopForIndx(value);
-      }
+        currentWork() {
+          return this.works[this.currentIndex];
+        }
     },
     methods: {
-        makeInfiniteLoopForIndx(index) {
-            const worksNumber = this.works.length - 1;
-            if(index < 0) this.currentIndex = worksNumber;
-            if(index > worksNumber) this.currentIndex = 0;
-        },
         requireImgToArray(data) {
           return data.map(item => {
               const requiredImage = require(`../images/content/${item.photo}`).default;
@@ -70,21 +69,37 @@ new Vue({
               return item
           });
         },
-        slide(direction) {
-            const lastItem = this.works[this.works.length - 1];
-            switch(direction) {
+        slide(data) {
+            const btnNext = data.btnOff.buttonNext;
+            const btnPrev = data.btnOff.buttonPrev;
+            switch(data.direction) {
                 case "next":
-                    this.works.push(this.works[0]);
-                    this.works.shift();
-                    this.currentIndex++
+                    if(this.currentIndex === 3) {
+                        break;
+                    } else if(this.currentIndex === 0) {
+                        btnPrev.classList.remove('non-active');
+                    }
+                    this.currentIndex++;
+                    if(this.currentIndex === 3) {
+                        btnNext.classList.add('non-active');
+                        break;
+                    }
                     break;
                 case "prev":
-                    this.works.unshift(lastItem);
-                    this.works.pop()
+                    if(this.currentIndex === 0) {
+                        break;
+                    } else if(this.currentIndex === 3) {
+                        btnNext.classList.remove('non-active');
+                    }
                     this.currentIndex--
+                    if(this.currentIndex === 0) {
+                        btnPrev.classList.add('non-active');
+                        break;
+                    }
                     break;
             }
-        }
+        },
+
     },
     created() {
         const data = require("../data/works.json");

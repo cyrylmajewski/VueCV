@@ -45,10 +45,23 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(180deg);
+            transition: all .3s;
             opacity: 0.3;
         }
         &:hover:after {
             opacity: 1;
         }
     }
+}
+
+.non-active {
+    cursor: default !important;
+}
+
+.non-active.square-btns__item--next:hover:after {
+    opacity: 0.3;
+}
+
+.non-active.square-btns__item--prev:hover:after {
+    opacity: 0.3;
 }
