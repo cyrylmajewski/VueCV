@@ -1,0 +1,27 @@
+.quote {
+    display: flex;
+}
+
+.quote__user {
+    flex: 1;
+
+    @include tablets {
+        flex: auto;
+    }
+}
+
+.quote__text {
+    opacity: 0.5;
+    color: #ffffff;
+    width: 52%;
+    margin-bottom: 32px;
+    font-weight: 600;
+
+    @include desktop {
+        width: 73%;
+    }
+
+    @include tablets {
+        width: 100%;
+    }
+}

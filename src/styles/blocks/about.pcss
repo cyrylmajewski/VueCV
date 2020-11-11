@@ -1,0 +1,66 @@
+.about {
+    padding: 400px 0 207px 0;
+}
+
+.about__container {
+    display: flex;
+    justify-content: center;
+    @include phones {
+        flex-direction: column;
+    }
+}
+
+.about__desc {
+    font-weight: 600;
+    color: rgba("#fff", .5);
+    margin-bottom: 30px;
+}
+
+.about__user {
+    width: 24%;
+    @include desktop {
+        width: 40%;
+        margin-right: 2%;
+    }
+
+    @include phones {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+.about__title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 38px;
+
+    @include tablets {
+        font-size: 30px;
+    }
+}
+
+.about__text-info {
+    color: rgba("#fff", .5);
+    margin-bottom: 105px;
+    font-weight: 600;
+}
+
+.about__ps {
+    font-style: italic;
+    color: rgba("#fff", .5);
+}
+
+.about__content {
+    width: 40%;
+    @include desktop {
+        width: 50%
+    }
+
+    @include tablets {
+        width: 54%;
+    }
+
+    @include phones {
+        width: 100%;
+    }
+}
