@@ -55,7 +55,12 @@ export default {
       if (this.title.trim() === this.value.trim()) {
         this.editmode = false;
       } else{
-        this.$emit("approve", this.value);
+        this.errorMessage = '';
+        if(this.value.trim() === "") {
+          this.errorMessage = 'Заполните поле';
+        } else {
+          this.$emit("approve", this.value);
+        }
       }
     }
   },
