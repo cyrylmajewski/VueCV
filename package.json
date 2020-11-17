@@ -8,7 +8,8 @@
     "build": "webpack --mode=production --progress",
     "reg": "node reg-util.js",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
@@ -62,12 +63,16 @@
     "last 2 versions"
   ],
   "dependencies": {
+    "gh-pages": "^3.1.0",
+    "gh-pages-webpack-plugin": "^1.0.2",
     "normalize.css": "^8.0.1",
     "promptly": "^3.0.3",
     "pug": "^3.0.0",
     "request": "^2.88.0",
     "signale": "^1.4.0",
+    "swiper": "^6.3.5",
     "vue": "^2.6.7",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "^3.0.2"
   }
 }

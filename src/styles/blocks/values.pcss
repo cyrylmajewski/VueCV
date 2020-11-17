@@ -1,0 +1,74 @@
+.values {
+    padding: 149px 0;
+    position: relative;
+    background: url("~images/bg/middle.jpg") center center / cover no-repeat;
+    @include tablets {
+        padding: 149px 0 0 0;
+    }
+}
+
+.values__container {
+    @include tablets {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @include phones {
+        width: 91%;
+    }
+}
+
+.values__img {
+    content: "";
+    width: 100%;
+    max-width: 682px;
+    display: block;
+    position: absolute;
+    bottom: -6%;
+    left: 0;
+    @include desktop {
+        left: -7%;
+    }
+
+    &--tablets {
+        display: none;
+
+        @include tablets {
+            display: block;
+        }
+    }
+
+    @include tablets {
+        display: none;
+    }
+}
+
+.values__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 96px;
+}
+
+.values__title-text {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 59px;
+}
+
+.values__content {
+    color: rgba("#fff", .5);
+    width: 54%;
+    font-weight: 600;
+
+    @include phones {
+        width: 100%;
+    }
+}
+
+.values__widget {
+    @include tablets {
+        margin-bottom: 15px;
+    }
+}

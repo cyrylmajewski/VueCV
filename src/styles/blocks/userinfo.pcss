@@ -1,0 +1,54 @@
+.userinfo {
+    display: flex;
+    justify-content: center;
+    @include tablets {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.userinfo__name{
+    font-size: 72px;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: center;
+    font-weight: 800;
+    flex-basis: 400px;
+    line-height: 1;
+    margin-right: 21%;
+
+    @include tablets {
+        font-size: 48px;
+        width: 40%;
+        margin-right: 0;
+        flex-basis: auto;
+    }
+
+    @include phones {
+        width: 100%;
+    }
+}
+
+.userinfo__title {
+    font-weight: 600;
+    font-size: 18px;
+    text-align: right;
+    color: rgba($text-color, .4);
+    width: 17%;
+    line-height: 1.2;
+    margin-right: 62px;
+    padding-top: 29px;
+
+    @include tablets {
+        width: 22%;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        padding-top: 0;
+        text-align: center;
+        margin-right: 0;
+    }
+
+    @include phones {
+        width: 100%;
+    }
+}
