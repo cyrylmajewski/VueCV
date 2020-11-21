@@ -14,8 +14,7 @@ const routes = [
     {
         path: "/login",
         component: login,
-    }
+    },
 ];
 
 export default new VueRouter({routes});
-

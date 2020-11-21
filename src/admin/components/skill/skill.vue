@@ -9,22 +9,10 @@
   </div>
   <div class="skill-component" v-else>
     <div class="title">
-      <app-input
-          noSidePaddings
-          v-model="currentSkill.title"
-          :errorMessage="errorMessage"
-      />
+      <app-input noSidePaddings v-model="currentSkill.title"/>
     </div>
     <div class="percent">
-      <app-input
-          v-model="currentSkill.percent"
-          type="number"
-          min="0"
-          max="100"
-          maxlength="3"
-          :errorMessage="errorMessage"
-          @keydown.native.enter="onApprove"
-      />
+      <app-input v-model="currentSkill.percent" type="number" min="0" max="100" maxlength="3" />
     </div>
     <div class="buttons">
       <icon symbol="tick" class="btn" @click="$emit('approve', currentSkill)"/>
@@ -52,15 +40,8 @@ export default {
         id: 0,
         title: this.skill.title,
         percent: this.skill.percent
-      },
-      errorMessage: {
-        type: String,
-        default: ""
       }
     }
-  },
-  methods: {
-    
   },
   components: {
     icon,
