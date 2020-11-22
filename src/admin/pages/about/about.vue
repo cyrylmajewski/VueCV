@@ -1,11 +1,7 @@
 <template>
   <div class="about-page-component">
-    <headline title="Панель управления">
-      <user />
-    </headline>
-    <navigation />
     <div class="page-content">
-      <div class="container">
+      <div class="container" v-if="categories.length">
         <div class="header">
           <div class="title">Блок "Обо мне"</div>
           <iconed-button
@@ -15,10 +11,12 @@
               title="Добавить группу"
           />
         </div>
+        <pre>{{categories}}</pre>
         <ul class="skills">
           <li class="item" v-if="emptyCatIsShown">
             <category
                 @remove="emptyCatIsShown = false"
+                @approve="createCategory"
                 empty
             />
           </li>
@@ -30,9 +28,15 @@
             <category
                 :title="category.category"
                 :skills="category.skills"
+                @create-skill="createSkill($event, category.id)"
+                @edit-skill="editSkill"
+                @remove-skill="removeSkill"
             />
           </li>
         </ul>
+      </div>
+      <div class="container" v-else>
+        loading...
       </div>
     </div>
   </div>
@@ -45,6 +49,7 @@ import User from "../../components/user/user";
 import navigation from "../../components/navigation/navigation";
 import button from "../../components/button/button";
 import category from "../../components/category/category";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: {
@@ -57,12 +62,50 @@ export default {
   },
   data() {
     return {
-      categories: [],
       emptyCatIsShown: false
     }
   },
+  computed: {
+    ...mapState("categories", {
+      categories: state => state.data
+    })
+  },
+  methods: {
+    ...mapActions({
+      createCategoryAction: "categories/create",
+      fetchCategoriesAction: "categories/fetch",
+      addSkillAction: "skills/add",
+      removeSkillAction: "skills/remove",
+      editSkillAction: "skills/edit",
+    }),
+    async createSkill(skill, categoryId) {
+      const newSkill = {
+        ...skill,
+        category: categoryId
+      }
+      console.log('skill', skill);
+      await this.addSkillAction(newSkill);
+
+      skill.title = "";
+      skill.percent = "";
+    },
+    removeSkill() {
+      this.removeSkillAction();
+    },
+    editSkill() {
+      this.editSkillAction();
+    },
+    async createCategory(categoryTitle) {
+      try {
+        await this.createCategoryAction(categoryTitle);
+        this.emptyCatIsShown = false;
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
+  },
   created() {
-    this.categories = require("../../data/categories.json");
+    this.fetchCategoriesAction();
   }
 }
 </script>
