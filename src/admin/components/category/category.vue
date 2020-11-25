@@ -4,8 +4,9 @@
         slot="title"
         v-model="categoryTitle"
         :editModeByDefault="empty"
-        @remove="$emit('remove', $event)"
-        @approve="$emit('approve', $event)"
+        @remove="$emit('remove-category', $event)"
+        @create="$emit('create-category', $event)"
+        @edit="$emit('edit-category', $event)"
     />
     <template slot="content">
       <ul class="skills" v-if="empty === false">

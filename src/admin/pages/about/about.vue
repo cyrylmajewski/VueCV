@@ -11,12 +11,11 @@
               title="Добавить группу"
           />
         </div>
-        <pre>{{categories}}</pre>
         <ul class="skills">
           <li class="item" v-if="emptyCatIsShown">
             <category
-                @remove="emptyCatIsShown = false"
-                @approve="createCategory"
+                @remove-category="emptyCatIsShown = false"
+                @create-category="createCategory"
                 empty
             />
           </li>
@@ -28,9 +27,31 @@
             <category
                 :title="category.category"
                 :skills="category.skills"
+                @edit-category="editCategory($event, category.id)"
                 @create-skill="createSkill($event, category.id)"
+                @remove-category="deleteCategory($event, category.id)"
                 @edit-skill="editSkill"
                 @remove-skill="removeSkill"
+            />
+          </li>
+        </ul>
+      </div>
+      <div class="container" v-else-if="categories.length === 0">
+        <div class="header">
+          <div class="title">Блок "Обо мне"</div>
+          <iconed-button
+              type="iconed"
+              v-if="emptyCatIsShown === false"
+              @click="emptyCatIsShown = true"
+              title="Добавить группу"
+          />
+        </div>
+        <ul class="skills">
+          <li class="item" v-if="emptyCatIsShown">
+            <category
+                @remove-category="emptyCatIsShown = false"
+                @create-category="createCategory"
+                empty
             />
           </li>
         </ul>
@@ -73,6 +94,8 @@ export default {
   methods: {
     ...mapActions({
       createCategoryAction: "categories/create",
+      editCategoryAction: "categories/edit",
+      deleteCategoryAction: "categories/delete",
       fetchCategoriesAction: "categories/fetch",
       addSkillAction: "skills/add",
       removeSkillAction: "skills/remove",
@@ -83,17 +106,16 @@ export default {
         ...skill,
         category: categoryId
       }
-      console.log('skill', skill);
       await this.addSkillAction(newSkill);
-
       skill.title = "";
       skill.percent = "";
     },
-    removeSkill() {
-      this.removeSkillAction();
+    removeSkill(skill) {
+      this.removeSkillAction(skill);
     },
-    editSkill() {
-      this.editSkillAction();
+    async editSkill(skill) {
+      await this.editSkillAction(skill);
+      skill.editmode = false;
     },
     async createCategory(categoryTitle) {
       try {
@@ -102,6 +124,16 @@ export default {
       } catch (e) {
         console.log(e.message);
       }
+    },
+    async editCategory(category, categoryId) {
+      const titleToEdit = {
+        title: category,
+        id: categoryId
+      }
+      await this.editCategoryAction(titleToEdit);
+    },
+    async deleteCategory(category, categoryId) {
+      await this.deleteCategoryAction(categoryId);
     }
   },
   created() {
