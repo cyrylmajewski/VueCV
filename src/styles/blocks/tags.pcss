@@ -1,0 +1,20 @@
+.tags {
+    display: flex;
+    margin-bottom: 50px;
+    @include tablets {
+        justify-content: center;
+    }
+}
+
+.tags__item {
+    padding: 16px 21px;
+    background: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(65,76,99,.7);
+    border-radius: 50px;
+    margin-right: 10px;
+    &:last-child {
+        margin-right: 0;
+    }
+}
