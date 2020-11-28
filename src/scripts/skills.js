@@ -44,7 +44,6 @@ new Vue({
     },
     async created() {
         const { data } = await axios.get(`/categories/423`);
-        console.log(data);
         this.skills = data;
     }
 });

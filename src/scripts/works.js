@@ -1,4 +1,7 @@
 import Vue from "vue";
+import axios from "axios";
+
+axios.defaults.baseURL = 'https://webdev-api.loftschool.com';
 
 const thumbs = {
     props: ["works", "currentWork"],
@@ -9,8 +12,8 @@ const btns = {
     template: "#preview-btns",
     methods: {
         buttonOff(direction) {
-                let btnOff = this.$refs;
-                this.$emit('slide',{direction, btnOff} );
+            let btnOff = this.$refs;
+            this.$emit('slide',{direction, btnOff} );
         }
     },
     mounted() {
@@ -41,7 +44,7 @@ const info = {
     components: { tags },
     computed: {
         tagsArray() {
-            return this.currentWork.skills.split(",");
+            return this.currentWork.techs.split(",");
         }
     }
 };
@@ -53,34 +56,42 @@ new Vue({
     data() {
         return {
             works: [],
-            currentIndex: 0
+            currentIndex: 0,
+            download: false,
         }
     },
     computed: {
         currentWork() {
-          return this.works[this.currentIndex];
+            return (this.download === true) ? this.works[this.currentIndex] : {
+                id: 1,
+                title: "1 Сайт школы онлайн образования",
+                techs: "Html, Css, JavaScript",
+                photo: "slider-1.png",
+                link: "//google.com",
+                description: "1 Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!"
+            };
         }
     },
     methods: {
         requireImgToArray(data) {
-          return data.map(item => {
-              const requiredImage = require(`../images/content/${item.photo}`).default;
-              item.photo = requiredImage;
-              return item
-          });
+            return data.map(item => {
+                const requiredImage = `https://webdev-api.loftschool.com/${item.photo}`;
+                item.photo = requiredImage;
+                return item
+            });
         },
         slide(data) {
             const btnNext = data.btnOff.buttonNext;
             const btnPrev = data.btnOff.buttonPrev;
             switch(data.direction) {
                 case "next":
-                    if(this.currentIndex === 3) {
+                    if(this.currentIndex === this.works.length - 1) {
                         break;
                     } else if(this.currentIndex === 0) {
                         btnPrev.classList.remove('non-active');
                     }
                     this.currentIndex++;
-                    if(this.currentIndex === 3) {
+                    if(this.currentIndex === this.works.length - 1) {
                         btnNext.classList.add('non-active');
                         break;
                     }
@@ -88,7 +99,7 @@ new Vue({
                 case "prev":
                     if(this.currentIndex === 0) {
                         break;
-                    } else if(this.currentIndex === 3) {
+                    } else if(this.currentIndex === this.works.length - 1) {
                         btnNext.classList.remove('non-active');
                     }
                     this.currentIndex--
@@ -99,11 +110,14 @@ new Vue({
                     break;
             }
         },
-
     },
-    created() {
-        const data = require("../data/works.json");
-        this.works = this.requireImgToArray(data);
+    async created() {
+        // const data = require("../data/works.json");
+        const { data } = await axios.get(`/works/423`);
+        this.works = await this.requireImgToArray(data);;
+        this.download = true;
+        console.log(this.works);
+        // const { data } = await axios.get(`/works/423`);
+
     }
 })
-

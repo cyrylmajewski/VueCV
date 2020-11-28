@@ -55,13 +55,13 @@ script(type="text/x-template")#preview-info
     )
     .works-previews__title {{currentWork.title}}
     .works-previews__desc
-      p {{currentWork.desc}}
+      p {{currentWork.description}}
     .works-previews__link
       a(:href="currentWork.link").iconed-link
         +icon('link', 'iconed-link__svg')
         p Посмотреть сайт
 
 script(type="text/x-template")#preview-tags
-  ul.tags
+  ul.tags(v-if="tags.length")
     li.tags__item(v-for="tag in tags")
       .tag {{tag}}

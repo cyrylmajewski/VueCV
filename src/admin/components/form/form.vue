@@ -1,13 +1,12 @@
 <template>
   <div class="form-component">
-    <pre>{{newWork}}</pre>
     <form class="form" @submit.prevent="handleSubmit">
       <card title="Добавленные работы">
         <div class="form-container" slot="content">
           <div class="form-cols">
             <div class="form-col">
               <label
-                  :style="{backgroundImage: `url(${newWork.preview})`}"
+                  :style="{backgroundImage: cover}"
                   :class="[ 'uploader', {active: newWork.preview}, {
                     hovered: hovered
                   } ]"
@@ -87,12 +86,13 @@ export default {
       work: (state) => state.currentWork,
     }),
     cover() {
-      if(this.newWork.photo === { }) {
-        console.log(this.newWork.photo);
+      if(!this.uploadedPhoto) {
+        return `url("https://webdev-api.loftschool.com/${this.newWork.photo}")`;
+      } else if(this.uploadedPhoto) {
         return `url(${this.newWork.preview})`;
-      } else if(this.newWork.preview === "") {
-        return `https://webdev-api.loftschool.com/${this.newWork.photo}`;
       }
+
+        // return `url(${this.newWork.preview})`;
     }
   },
   data() {
@@ -107,11 +107,13 @@ export default {
         preview: "",
       },
       editModeData: this.editMode,
+      uploadedPhoto: false,
     };
   },
   created() {
     if(this.editModeData) {
       this.newWork = this.work;
+      this.uploadedPhoto = false;
     }
   },
   methods: {
@@ -140,8 +142,8 @@ export default {
 
       this.newWork.photo = file;
       this.renderPhoto(file);
-      console.log(this.newWork);
       this.hovered = false;
+      this.uploadedPhoto = true;
     },
     renderPhoto(file) {
       const reader = new FileReader();

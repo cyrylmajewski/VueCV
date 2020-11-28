@@ -9,6 +9,8 @@ import $axios from "./requests";
 Vue.use(VueSimpleValidator, {mode: 'manual'});
 
 store.$axios = $axios;
+//new macbook pro
+
 
 new Vue({
   el: "#app-root",
