@@ -1,5 +1,5 @@
 <template>
-  <div class="about-page-component">
+  <div class="about-page-component page-component">
     <div class="page-content">
       <div class="container" v-if="categories.length">
         <div class="header">

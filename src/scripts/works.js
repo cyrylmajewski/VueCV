@@ -103,7 +103,6 @@ new Vue({
     },
     created() {
         const data = require("../data/works.json");
-        console.log(data);
         this.works = this.requireImgToArray(data);
     }
 })

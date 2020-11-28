@@ -45,5 +45,28 @@ export default {
 body {
   color: #414c63;
 }
+
+.page-content {
+  background: url("/src/images/bg/admin.jpg") center center / cover no-repeat;
+  flex: 1;
+}
+
+.page-component {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-title {
+  margin-right: 60px;
+  font-size: 21px;
+  font-weight: bold;
+  color: #414c63;
+}
+
+.page-header {
+  display: flex;
+  margin-bottom: 60px;
+}
 </style>
 

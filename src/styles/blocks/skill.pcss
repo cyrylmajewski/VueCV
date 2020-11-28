@@ -21,18 +21,15 @@
 
 .skills-row__list {
     display: flex;
-    width: 100%;
-    max-width: 740px;
-    justify-content: space-between;
-    margin-right: 4%;
-
+    flex-wrap: wrap;
+    width: 66%;
     @include tablets {
         margin-right: 0;
     }
+}
 
-    @include phones {
-        flex-wrap: wrap;
-    }
+.skills-row__item {
+    margin-left: 4%;
 }
 
 .skill__title {

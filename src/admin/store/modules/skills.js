@@ -19,6 +19,7 @@ export default {
         },
         async edit({commit}, skillToEdit) {
             try {
+                console.log(skillToEdit);
                 const {data} = await this.$axios.post(`/skills/${skillToEdit.id}`, skillToEdit);
                 commit("categories/EDIT_SKILL", data.skill, {root: true})
             } catch (e) {
