@@ -14,8 +14,8 @@
           />
           <app-form
               v-if="createMode"
-              @cancel="createMode = false"
               @off-create-mode="createMode = false"
+              @cancel="createMode = false"
           />
         </div>
         <ul class="cards">

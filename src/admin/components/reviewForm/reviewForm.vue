@@ -1,7 +1,7 @@
 <template>
   <div class="form-component">
     <form class="form" @submit.prevent="handleSubmit">
-      <card title="Добавление">
+      <card :title="changeTitle">
         <div class="form-container" slot="content">
           <div class="form-cols">
             <div class="form-col">
@@ -26,7 +26,7 @@
             <div class="form-col">
               <div class="form-row">
                 <div class="form-row-col">
-                  <app-input v-model="newReview.author" title="Имя автора"/>
+                  <app-input v-model="newReview.author" title="Имя автора" />
                 </div>
                 <div class="form-row-col">
                   <app-input v-model="newReview.occ" title="Титул автора"/>
@@ -36,7 +36,10 @@
                 <app-input
                     v-model="newReview.text"
                     field-type="textarea"
-                    title="Отзыв" />
+                    title="Отзыв"
+                    :error-message="textErrorMessage"
+                    @input="sliceMessage"
+                />
               </div>
             </div>
           </div>
@@ -80,7 +83,7 @@ export default {
     editMode: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   data() {
     return {
@@ -94,6 +97,7 @@ export default {
       },
       editModeData: this.editMode,
       uploadedPhoto: false,
+      textErrorMessage: '',
     };
   },
   computed: {
@@ -108,6 +112,9 @@ export default {
         console.log(this.uploadedPhoto);
         return `url(${this.newReview.preview})`;
       }
+    },
+    changeTitle() {
+      return (this.editMode === true) ? "Редактировать отзыв" : "Добавить отзыв";
     }
   },
   created() {
@@ -153,6 +160,12 @@ export default {
 
       reader.onloadend = () => {
         this.newReview.preview = reader.result;
+      }
+    },
+    sliceMessage(message) {
+      if(message.length > 170) {
+        this.newReview.text = this.newReview.text.substring(0, 170);
+        this.textErrorMessage = 'Максимальное количество символов: 170';
       }
     }
   }

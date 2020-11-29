@@ -38,7 +38,11 @@
                 <app-input v-model="newWork.link" title="Ссылка" />
               </div>
               <div class="form-row">
-                <app-input v-model="newWork.description" field-type="textarea" title="Описание" />
+                <app-input
+                    v-model="newWork.description"
+                    field-type="textarea"
+                    :error-message="textErrorMessage"
+                    @input="sliceMessage" title="Описание" />
               </div>
               <div class="form-row">
                 <tags-adder v-model="newWork.techs" title="Добавление тега" />
@@ -111,6 +115,7 @@ export default {
       },
       editModeData: this.editMode,
       uploadedPhoto: false,
+      textErrorMessage: '',
     };
   },
   created() {
@@ -155,6 +160,12 @@ export default {
 
       reader.onloadend = () => {
         this.newWork.preview = reader.result;
+      }
+    },
+    sliceMessage(message) {
+      if(message.length > 170) {
+        this.newWork.description = this.newWork.description.substring(0, 180);
+        this.textErrorMessage = 'Максимальное количество символов: 180';
       }
     }
   }

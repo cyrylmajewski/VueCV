@@ -13,13 +13,12 @@ export default {
             state.data = works;
         },
         SET_WORK(state, workToEdit) {
-            const findWork = work => {
-                if(work.id === workToEdit.id) {
-                    return workToEdit;
-                }
+             const findWork = (work) => {
+                 return work.id === workToEdit.id ? workToEdit : work;
             }
+            console.log(findWork);
             state.data = state.data.map(findWork);
-            console.log(workToEdit);
+            console.log(state.data);
         },
         DELETE_WORK(state, workToDelete) {
             state.data = state.data.filter(work => work.id !== workToDelete);
@@ -51,6 +50,7 @@ export default {
                     return response.data.user.id;
                 });
                 const { data } = await this.$axios.get(`/works/${userID}`);
+                console.log(data);
                 commit("SET_WORKS", data);
             } catch(e) {
                 console.log(e);

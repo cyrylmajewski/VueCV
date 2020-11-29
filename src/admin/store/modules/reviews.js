@@ -9,14 +9,11 @@ export default {
             state.data.push(newReview);
         },
         SET_REVIEWS(state, reviews) {
-            console.log(reviews);
             state.data = reviews;
         },
         SET_REVIEW(state, reviewToEdit) {
             const findReview = review => {
-                if(review.id === reviewToEdit.id) {
-                    return reviewToEdit;
-                }
+                return review.id === reviewToEdit.id ? reviewToEdit : review;
             }
             state.data = state.data.map(findReview);
             console.log(reviewToEdit);
@@ -69,7 +66,6 @@ export default {
         },
         async edit({commit}, reviewToEdit) {
             const formData = new FormData();
-
             Object.keys(reviewToEdit).forEach(item => {
                 formData.append(item, reviewToEdit[item]);
             })
