@@ -1,64 +1,63 @@
 <template>
   <div class="form-component">
     <form class="form" @submit.prevent="handleSubmit">
-      <card
-          :title="changeTitle"
-      >
+      <card title="Добавление">
         <div class="form-container" slot="content">
           <div class="form-cols">
             <div class="form-col">
-              <label
-                  :style="{backgroundImage: cover}"
-                  :class="[ 'uploader', {active: newWork.preview}, {
-                    hovered: hovered
-                  } ]"
-                  @dragover="handleDragOver"
-                  @dragleave="hovered = false"
-                  @drop="handleChange"
-              >
-                <span class="uploader-title">
-                  Перетащите или загрузите картинку
-                </span>
-                <span class="uploader-btn">
+              <label>
+                <div
+                    :style="{backgroundImage: cover}"
+                    :class="['uploader-img', {active: newReview.preview}, {
+                    hovered: hovered}]"
+                    @dragover="handleDragOver"
+                    @dragleave="hovered = false"
+                    @drop="handleChange"></div>
+                <div class="uploader-btn">
                   <app-button
+                      title="Добавить фото"
                       typeAttr="file"
+                      plain
                       @change="handleChange"
                   ></app-button>
-                </span>
+                </div>
               </label>
             </div>
             <div class="form-col">
               <div class="form-row">
+                <div class="form-row-col">
+                  <app-input v-model="newReview.author" title="Имя автора"/>
+                </div>
+                <div class="form-row-col">
+                  <app-input v-model="newReview.occ" title="Титул автора"/>
+                </div>
+              </div>
+              <div class="form-row">
                 <app-input
-                    v-model="newWork.title"
-                    title="Название"
-                />
-              </div>
-              <div class="form-row">
-                <app-input v-model="newWork.link" title="Ссылка" />
-              </div>
-              <div class="form-row">
-                <app-input v-model="newWork.description" field-type="textarea" title="Описание" />
-              </div>
-              <div class="form-row">
-                <tags-adder v-model="newWork.techs" title="Добавление тега" />
+                    v-model="newReview.text"
+                    field-type="textarea"
+                    title="Отзыв" />
               </div>
             </div>
           </div>
           <div class="form-btns">
             <div class="btn">
-              <app-button title="Отмена" @click="$emit('cancel')" plain></app-button>
+              <app-button
+                  title="Отмена"
+                  plain
+                  @click="$emit('cancel')"
+              ></app-button>
             </div>
             <div class="btn">
               <app-button
                   title="Сохранить"
                   typeAttr="submit"
-                  v-if="!editMode"
+                  v-if="editMode"
               ></app-button>
               <app-button
-                  v-if="editMode"
                   title="Сохранить"
                   typeAttr="submit"
+                  v-if="!editMode"
               ></app-button>
             </div>
           </div>
@@ -68,61 +67,60 @@
   </div>
 </template>
 
+
 <script>
 import card from "../Card";
 import appButton from "../button";
 import appInput from "../input";
-import tagsAdder from "../tagsAdder";
 import { mapActions, mapState } from "vuex";
 
 export default {
-  components: {card, appButton, appInput, tagsAdder},
+  components: {card, appButton, appInput},
   props: {
     editMode: {
       type: Boolean,
       default: false,
     }
   },
-  computed: {
-    ...mapState("works", {
-      work: (state) => state.currentWork,
-    }),
-    cover() {
-      if(!this.uploadedPhoto) {
-        return (this.newWork.preview === "") ? "#dee4ed" :`url("https://webdev-api.loftschool.com/${this.newWork.photo}")`;
-      } else if(this.uploadedPhoto) {
-        return `url(${this.newWork.preview})`;
-      }
-    },
-    changeTitle() {
-      return (this.editMode === true) ? "Редактирование работы" : "Добавление работы";
-    }
-  },
   data() {
     return {
       hovered: false,
-      newWork: {
-        title: "",
-        link: "",
-        description: "",
-        techs: "",
+      newReview: {
         photo: {},
+        author: "",
+        occ: "",
+        text: "",
         preview: "",
       },
       editModeData: this.editMode,
       uploadedPhoto: false,
     };
   },
+  computed: {
+    ...mapState("reviews", {
+      review: (state) => state.currentReview,
+    }),
+    cover() {
+      if(!this.uploadedPhoto) {
+        console.log(this.uploadedPhoto);
+        return (this.newReview.preview === "") ? `url("/src/images/content/user-unknown.png")` : `url("https://webdev-api.loftschool.com/${this.newReview.photo}")`;
+      } else if(this.uploadedPhoto) {
+        console.log(this.uploadedPhoto);
+        return `url(${this.newReview.preview})`;
+      }
+    }
+  },
   created() {
     if(this.editModeData) {
-      this.newWork = this.work;
+      console.log(this.review);
+      this.newReview = this.review;
       this.uploadedPhoto = false;
     }
   },
   methods: {
     ...mapActions({
-      addNewWork: "works/add",
-      editWork: "works/edit"
+      addNewReview: "reviews/add",
+      editReview: "reviews/edit"
     }),
     handleDragOver(e) {
       e.preventDefault();
@@ -130,11 +128,11 @@ export default {
     },
     async handleSubmit() {
       if(this.editModeData) {
-        await this.editWork(this.newWork);
+        await this.editReview(this.newReview);
         this.editModeData = !this.editModeData;
         this.$emit('off-edit-mode');
       } else {
-        await this.addNewWork(this.newWork);
+        await this.addNewReview(this.newReview);
         this.$emit('off-create-mode');
       }
     },
@@ -143,7 +141,7 @@ export default {
       const file = event.dataTransfer
           ? event.dataTransfer.files[0] : event.target.files[0];
 
-      this.newWork.photo = file;
+      this.newReview.photo = file;
       this.renderPhoto(file);
       this.hovered = false;
       this.uploadedPhoto = true;
@@ -154,12 +152,14 @@ export default {
       reader.readAsDataURL(file);
 
       reader.onloadend = () => {
-        this.newWork.preview = reader.result;
+        this.newReview.preview = reader.result;
       }
     }
   }
-}
 
+}
 </script>
 
-<style src="./form.pcss" lang="postcss" scoped></style>
+<style lang="postcss" src="./reviewForm.pcss" scoped>
+
+</style>
