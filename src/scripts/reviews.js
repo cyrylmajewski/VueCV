@@ -1,12 +1,15 @@
 import Vue from "vue";
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
+import axios from "axios";
+
+axios.defaults.baseURL = 'https://webdev-api.loftschool.com';
 
 new Vue({
     el: "#slider-component",
     template: "#slider-container",
     components: {
-      Swiper, SwiperSlide
+        Swiper, SwiperSlide
     },
     data() {
         return {
@@ -39,8 +42,8 @@ new Vue({
         },
         requireImgToArray(data) {
             return data.map((item) => {
-                const requiredImage = require(`../images/content/${item.pic}`).default;
-                item.pic = requiredImage;
+                const requiredImage = `https://webdev-api.loftschool.com/${item.photo}`;
+                item.photo = requiredImage;
                 return item
             });
         },
@@ -79,10 +82,12 @@ new Vue({
             }
         }
     },
-    created() {
+    async created() {
         window.addEventListener('load', this.updateWidth);
         window.addEventListener('resize', this.updateWidth);
-        const data = require("../data/reviews.json");
+        // const data = require("../data/reviews.json");
+        const { data } = await axios.get(`/reviews/423`);
+        console.log(data);
         this.reviews = this.requireImgToArray(data);
     },
     mounted() {

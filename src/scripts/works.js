@@ -114,10 +114,7 @@ new Vue({
     async created() {
         // const data = require("../data/works.json");
         const { data } = await axios.get(`/works/423`);
-        this.works = await this.requireImgToArray(data);;
+        this.works = await this.requireImgToArray(data);
         this.download = true;
-        console.log(this.works);
-        // const { data } = await axios.get(`/works/423`);
-
     }
 })
