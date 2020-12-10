@@ -9,9 +9,9 @@
     <div v-else class="title">
       <div class="input">
         <app-input
-          placeholder="Название новой группы"
+          placeholder="Название группы"
           :value="value"
-          :errorText="errorText"
+          :errorMessage="errorSMS"
           @input="$emit('input', $event)"
           @keydown.native.enter="onApprove"
           autofocus="autofocus"
@@ -23,7 +23,7 @@
           <icon symbol="tick" @click="onApprove"></icon>
         </div>
         <div class="button-icon">
-          <icon symbol="cross" @click="$emit('remove')"></icon>
+          <icon symbol="cross" @click="$emit('remove', title)"></icon>
         </div>
       </div>
     </div>
@@ -37,16 +37,18 @@ export default {
       type: String,
       default: ""
     },
-    errorText: {
+    errorMessage: {
       type: String,
       default: ""
     },
+    editModeByDefault: Boolean,
     blocked: Boolean
   },
   data() {
     return {
-      editmode: false,
-      title: this.value
+      editmode: this.editModeByDefault,
+      title: this.value,
+      errorSMS: this.errorMessage
     };
   },
   methods: {
@@ -54,9 +56,19 @@ export default {
       if (this.title.trim() === this.value.trim()) {
         this.editmode = false;
       } else {
-        this.$emit("approve", this.value);
+        this.errorSMS = '';
+        if(this.value.trim() === "") {
+          this.errorSMS = 'Заполните поле';
+        } else if(this.title.trim() !== "") {
+          console.log(this.title);
+          this.$emit("edit", this.value);
+          this.editmode = false;
+        } else {
+          console.log("create");
+          this.$emit("create", this.value);
+        }
       }
-    }
+    },
   },
   components: {
     icon: () => import("components/icon"),

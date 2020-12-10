@@ -1,0 +1,22 @@
+.iconed-link {
+    display: flex;
+    align-items: center;
+    @include tablets {
+        justify-content: center;
+    }
+
+    @include phones {
+        justify-content: flex-start;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.iconed-link__svg {
+    fill: #586ed3;
+    width: 15px;
+    height: 15px;
+    margin-right: 20px;
+}
